@@ -149,6 +149,7 @@ public class DialogueController : MonoBehaviour
     {
         dialogueData = dialogueChoices.Escolhas[choiceIndex].consequencia;
         choicePanel.SetActive(false);
+        isChoiceDialogue = false;
         RestartDialogue();
     }
 
