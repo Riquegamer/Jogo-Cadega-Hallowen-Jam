@@ -1,16 +1,49 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public static GameController instance;
+
+    private void Awake()
     {
-        
+        DontDestroyOnLoad(this.gameObject);
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void QuitGame()
     {
+        Application.Quit();
+    }
+
+    public void RestartGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    }
+
+    public void ActiveInventory() 
+    {
+        
+        GameObject inventory = GameObject.FindWithTag("Inventory");
+        if (inventory != null)
+        {
+            if (inventory.activeSelf)
+                inventory.SetActive(false);
+            else
+                inventory.SetActive(true);
+        }
         
     }
 }

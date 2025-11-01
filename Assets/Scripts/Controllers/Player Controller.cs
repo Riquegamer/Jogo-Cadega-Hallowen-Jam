@@ -99,4 +99,14 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region Inventory
+    public void ActiveInventory(InputAction.CallbackContext context) 
+    {
+        if (context.performed)
+        {
+            GameController.instance.ActiveInventory();
+        }
+    }
+    #endregion
+
 }
