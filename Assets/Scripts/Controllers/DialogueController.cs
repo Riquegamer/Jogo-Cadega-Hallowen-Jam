@@ -2,6 +2,9 @@ using System.Runtime.CompilerServices;
 using System.Collections;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+using TMPro;
+using Unity.VisualScripting;
 
 public enum State
 {
@@ -12,7 +15,10 @@ public enum State
 public class DialogueController : MonoBehaviour
 {
     [SerializeField] private DialogueData dialogueData;
-
+    [SerializeField] private DialogueChoice dialogueChoices;
+    [SerializeField] private bool isChoiceDialogue;
+    [SerializeField] private GameObject choicePanel;
+    [SerializeField] private TextMeshProUGUI[] textChoices;
     int currentText = 0;
     bool finished = false;
 
@@ -77,6 +83,10 @@ public class DialogueController : MonoBehaviour
         {
             Next();
         }
+        else if (isChoiceDialogue && dialogueChoices.Escolhas.Count > 0)
+        {
+            activeChoice();
+        }
         else
         {
             dialogueUI.Disable();
@@ -105,110 +115,41 @@ public class DialogueController : MonoBehaviour
         state = State.WAITING;
     }
 
-    private void ShowChoices()
+    public void RestartDialogue()
     {
+        // Reseta os índices e flags
+        currentText = 0;
+        finished = false;
+        state = State.DISABLED;
 
+        // Limpa o texto do UI
+        if (dialogueUI != null)
+        {
+            dialogueUI.Disable();
+        }
+
+        // Para qualquer digitação em andamento
+        if (typeText != null)
+        {
+            typeText.Skip();
+        }
+    }
+
+    void activeChoice()
+    {
+        for (int i = 0; i < dialogueChoices.Escolhas.Count; i++)
+        {
+            textChoices[i].text = dialogueChoices.Escolhas[i].optionText;
+        }
+
+        choicePanel.SetActive(true);
+    }
+
+    public void Choice(int choiceIndex)
+    {
+        dialogueData = dialogueChoices.Escolhas[choiceIndex].consequencia;
+        choicePanel.SetActive(false);
+        RestartDialogue();
     }
 
 }
-
-//using UnityEngine;
-//using System.Collections;
-
-//public class DialogueController : MonoBehaviour
-//{
-//    [SerializeField] private DialogueData startingNode; // Primeiro diálogo da árvore
-//    public DialogueData StartingNode => startingNode;
-//    private DialogueData currentNode;
-//    private int currentLineIndex;
-
-//    private DialogueUI dialogueUI;
-//    private TypeTextAnimation typeText;
-//    private PlayerController playerController;
-
-//    private bool isTyping;
-//    private bool dialogueEnded;
-
-//    private void Awake()
-//    {
-//        dialogueUI = FindFirstObjectByType<DialogueUI>();
-//        typeText = FindFirstObjectByType<TypeTextAnimation>();
-//        playerController = FindFirstObjectByType<PlayerController>();
-
-//        typeText.typingFinished = OnTypingFinished;
-//    }
-
-//    private void Start()
-//    {
-//        StartDialogue(startingNode);
-//    }
-
-//    public void StartDialogue(DialogueData node)
-//    {
-//        currentNode = node;
-//        currentLineIndex = 0;
-//        dialogueEnded = false;
-
-//        dialogueUI.Enable();
-//        ShowNextLine();
-//    }
-
-//    public void ShowNextLine()
-//    {
-//        if (isTyping) return;
-
-//        // Terminou as falas desse nó
-//        if (currentLineIndex >= currentNode.lines.Count)
-//        {
-//            OnNodeFinished();
-//            return;
-//        }
-
-//        var line = currentNode.lines[currentLineIndex++];
-//        dialogueUI.SetName(line.characterName);
-//        typeText.fullText = line.text;
-
-//        typeText.StartTyping();
-//        isTyping = true;
-//    }
-
-//    public void SkipTyping()
-//    {
-//        if (isTyping)
-//        {
-//            typeText.Skip();
-//            OnTypingFinished();
-//        }
-//    }
-
-//    private void OnTypingFinished()
-//    {
-//        isTyping = false;
-//    }
-
-//    private void OnNodeFinished()
-//    {
-//        // Se há escolhas, exibir
-//        if (currentNode.choices != null && currentNode.choices.Count > 0)
-//        {
-//            dialogueUI.ShowChoices(currentNode.choices, OnChoiceSelected);
-//        }
-//        else
-//        {
-//            // Nenhuma escolha = fim
-//            dialogueUI.Disable();
-//            dialogueEnded = true;
-//            playerController.FinishedTalk();
-//        }
-//    }
-
-//    private void OnChoiceSelected(DialogueData nextNode)
-//    {
-//        dialogueUI.HideChoices();
-//        StartDialogue(nextNode);
-//    }
-
-//    public bool IsDialogueActive() => !dialogueEnded;
-
-//}
-
