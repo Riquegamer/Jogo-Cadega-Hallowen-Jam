@@ -18,3 +18,9 @@ MonoBehaviour:
   - characterName: Policial
     text: "Veremos ent\xE3o, vou te mostrar a cena do crime, e posso dizer foi bem
       feio"
+  - characterName: Policial
+    text: "de acordo com os primeiros detetives muito provavelmente foi um suicidio
+      por conta da grande crise mas isso provavelmente j\xE1 lhe contaram. \n"
+  - characterName: Policial
+    text: "alguns dos meu superiores acham que pode ser um homic\xEDdio e mandaram
+      te chamar ent\xE3o descubra o que aconteceu ou s\xF3 libera a gente logo."

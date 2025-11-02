@@ -16,3 +16,10 @@ MonoBehaviour:
   - characterName: Policial
     text: "ESCUTA AQUI SEU M\xC9DIUM MERDINHA, EU S\xD3 N\xC3O TE ESPANCO E TE PRENDO
       PORQUE FOI O CHEFE QUE MANDOU TE CHAMAR!"
+  - characterName: Policial
+    text: "mudando de assunto de acordo com os primeiros detetives muito provavelmente
+      foi um suicidio por conta da grande crise mas isso provavelmente j\xE1 lhe
+      contaram. \r\n"
+  - characterName: Policial
+    text: "alguns dos meu superiores acham que pode ser um homic\xEDdio e mandaram
+      te chamar ent\xE3o descubra o que aconteceu ou s\xF3 libera a gente logo."

@@ -1,3 +1,4 @@
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,10 @@ public class PlayerController : MonoBehaviour
     private bool canMove = true;
     [SerializeField]private Rigidbody2D _rb;
     private Vector2 direction;
+    private SpriteRenderer _spriteRenderer;
+
+    [Header("Animation")]
+    private Animator _animator;
 
     [Header("Dialogue")]
     private DialogueController dialogueController;
@@ -28,6 +33,8 @@ public class PlayerController : MonoBehaviour
             dialogueTutorial.SetActive(false);
         }
         // _rb.GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -39,6 +46,23 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 movement = new Vector3(direction.x, direction.y, 0f);
+
+        if(direction!= Vector2.zero)
+        {
+            _animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            _animator.SetBool("isWalking", false);
+        }
+        if (direction.x > 0)
+        {
+            _spriteRenderer.flipX = false; 
+        }
+        else if (direction.x < 0) 
+        { 
+            _spriteRenderer.flipX = true; 
+        }
         _rb.MovePosition(_rb.position + Vector2.ClampMagnitude(movement, 1f) * _moveSpeed * Time.fixedDeltaTime);
     }
 
@@ -92,6 +116,7 @@ public class PlayerController : MonoBehaviour
             dialogueTutorial.SetActive(false);
             canTalk = false;
             canMove = false;
+            _rb.linearVelocity = Vector2.zero;
             isTalking = true;
         }
     }

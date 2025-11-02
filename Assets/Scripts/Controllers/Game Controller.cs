@@ -20,6 +20,17 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void StartGameplayAudio()
+    {
+        GameObject audioGameplay = GameObject.FindWithTag("SOUNDTRACK");
+        AudioSource audioSource = audioGameplay.GetComponent<AudioSource>();
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
+        else Debug.LogWarning("[GameController] AudioSource do SOUNDTRACK é null!");
+    }
+
     private void Start()
     {
         // Garante que temos todas as dependências antes de carregar o inventário

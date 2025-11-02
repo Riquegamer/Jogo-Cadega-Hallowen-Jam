@@ -7,6 +7,9 @@ TagManager:
   - NPC
   - DialogueTutorial
   - Inventory
+  - SOUNDTRACK
+  - Puzzle 01
+  - PRINCIPAL CANVAS
   layers:
   - Default
   - TransparentFX

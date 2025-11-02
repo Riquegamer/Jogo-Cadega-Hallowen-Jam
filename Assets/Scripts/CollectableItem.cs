@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class CollectableItem : MonoBehaviour
 {
+    [SerializeField] private bool _isDialogueOnCollect;
     public ItemData itemData;
     public string collectibleID; // identificador único
+    [SerializeField] DialogueData dialogueOnCollect;
 
     private void Start()
     {
@@ -22,7 +24,20 @@ public class CollectableItem : MonoBehaviour
             if (collected)
             {
                 DBController.Instance.MarkItemCollected(collectibleID);
-                Destroy(gameObject);
+                if (_isDialogueOnCollect) {
+                    DialogueController dialogueController = GetComponent<DialogueController>();
+                    if (dialogueController != null)
+                    {
+                        dialogueController.dialogueData = dialogueOnCollect;
+                        dialogueController.Next();
+                        Destroy(gameObject);
+                    }
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+                
             }
             else
             {

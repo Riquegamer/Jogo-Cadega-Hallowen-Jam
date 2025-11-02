@@ -14,7 +14,7 @@ public enum State
 }
 public class DialogueController : MonoBehaviour
 {
-    [SerializeField] private DialogueData dialogueData;
+    public DialogueData dialogueData;
     [SerializeField] private DialogueChoice dialogueChoices;
     [SerializeField] private bool isChoiceDialogue;
     [SerializeField] private GameObject choicePanel;
@@ -25,10 +25,12 @@ public class DialogueController : MonoBehaviour
     [SerializeField]TypeTextAnimation typeText;
     [SerializeField]DialogueUI dialogueUI;
 
+    private AudioSource audioSource;
     private State state;
 
     private PlayerController playerController;
     [SerializeField]private bool isStartDialogue;
+    [HideInInspector]public bool terminated;
 
     private void Awake()
     {
@@ -37,6 +39,7 @@ public class DialogueController : MonoBehaviour
         //dialogueUI = FindFirstObjectByType<DialogueUI>();
 
         typeText.typingFinished += OnTypingFinished;
+        audioSource = GetComponent<AudioSource>();
     }
     private void Start()
     {
@@ -53,6 +56,10 @@ public class DialogueController : MonoBehaviour
     {
         yield return new WaitForEndOfFrame(); // garante que a cena terminou de carregar
         Next();
+        if(audioSource != null)
+        {
+            audioSource.Play();
+        }
     }
     
 
@@ -108,6 +115,12 @@ public class DialogueController : MonoBehaviour
             currentText = 0;
             finished = false;
             playerController.FinishedTalk();
+            if(audioSource != null)
+            {
+                audioSource.Stop();
+                GameController.instance.StartGameplayAudio();
+            }
+            terminated = true;
         }
     }
 
