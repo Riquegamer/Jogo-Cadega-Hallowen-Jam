@@ -1,24 +1,24 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
 {
     public GameObject mouseItem;
+
     public void DraagItem(GameObject button)
     {
         mouseItem = button;
-        mouseItem.transform.position = Input.mousePosition;
+        if (Mouse.current != null)
+            mouseItem.transform.position = Mouse.current.position.ReadValue();
     }
 
-    public void DropItem(GameObject button) 
+    public void DropItem(GameObject button)
     {
-        if(mouseItem != null)
-        {
-            Transform aux = mouseItem.transform.parent;
-            mouseItem.transform.SetParent(button.transform.parent);
-            button.transform.SetParent(aux);
-        }
-    }
+        if (mouseItem == null) return;
 
+        Transform aux = mouseItem.transform.parent;
+        mouseItem.transform.SetParent(button.transform.parent);
+        button.transform.SetParent(aux);
+        mouseItem = null;
+    }
 }

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a83677dbb0a9bb5409844df722029052, type: 3}
+  m_Name: Policial
+  m_EditorClassIdentifier: 
+  talkScript:
+  - characterName: Policial
+    text: "Ent\xE3o voc\xEA \xE9 o charla"
+  - characterName: Policial
+    text: "digo M\xE9dium que tanto dizem sobre?"
+  - characterName: Player
+    text: sim sou eu o me-
+  - characterName: Policial
+    text: "a gente ta f@#$ depender de um charlat\xE3o para coisas s\xE9rias, \xE9
+      o fim do mundo, mas o chefe que mandou voc\xEA aqui ent\xE3o n\xE3o tem o que
+      eu possa fazer"

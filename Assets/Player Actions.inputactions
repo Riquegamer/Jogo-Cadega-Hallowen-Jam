@@ -144,6 +144,17 @@
                     "action": "SkipTalk",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d43d8822-d64e-4bc0-b9c0-9a7a1da6be98",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkipTalk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

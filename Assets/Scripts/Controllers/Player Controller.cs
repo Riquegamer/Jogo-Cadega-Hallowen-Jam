@@ -23,9 +23,17 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         dialogueTutorial = GameObject.Find("DialogueTutorial");
-        dialogueTutorial.SetActive(false);
+        if (dialogueTutorial != null)
+        {
+            dialogueTutorial.SetActive(false);
+        }
         // _rb.GetComponent<Rigidbody2D>();
-        dialogueController = FindFirstObjectByType<DialogueController>();
+    }
+
+    private void Start()
+    {
+        dialogueController = GameController.instance.FirstDialogue();
+        if (dialogueController != null) { isTalking = true; canMove = false; canTalk = false; }
     }
 
     void FixedUpdate()
@@ -43,8 +51,13 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("NPC"))
         {
-            dialogueTutorial.SetActive(true);
-            canTalk = true;
+            dialogueController = collision.GetComponent<DialogueController>();
+
+            if (dialogueController != null)
+            {
+                dialogueTutorial.SetActive(true);
+                canTalk = true;
+            }
         }
     }
 
@@ -54,6 +67,7 @@ public class PlayerController : MonoBehaviour
         {
             dialogueTutorial.SetActive(false);
             canTalk = false;
+            dialogueController = null;
         }
     }
 
@@ -102,6 +116,7 @@ public class PlayerController : MonoBehaviour
     #region Inventory
     public void ActiveInventory(InputAction.CallbackContext context) 
     {
+        Debug.Log("Inventory Input Received");
         if (context.performed)
         {
             GameController.instance.ActiveInventory();

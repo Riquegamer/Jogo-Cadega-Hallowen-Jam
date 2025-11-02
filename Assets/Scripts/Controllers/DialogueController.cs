@@ -22,25 +22,39 @@ public class DialogueController : MonoBehaviour
     int currentText = 0;
     bool finished = false;
 
-    TypeTextAnimation typeText;
-    DialogueUI dialogueUI;
+    [SerializeField]TypeTextAnimation typeText;
+    [SerializeField]DialogueUI dialogueUI;
 
     private State state;
 
     private PlayerController playerController;
+    [SerializeField]private bool isStartDialogue;
 
     private void Awake()
     {
         playerController = FindFirstObjectByType<PlayerController>();
-        typeText = FindFirstObjectByType<TypeTextAnimation>();
-        dialogueUI = FindFirstObjectByType<DialogueUI>();
+        //typeText = FindFirstObjectByType<TypeTextAnimation>();
+        //dialogueUI = FindFirstObjectByType<DialogueUI>();
 
-        typeText.typingFinished = OnTypingFinished;
+        typeText.typingFinished += OnTypingFinished;
     }
     private void Start()
     {
         state = State.DISABLED;
+
+        if (isStartDialogue)
+        {
+            StartCoroutine(StartInitialDialogue());
+            Debug.Log("Passou aqui" + gameObject.name);
+        }
     }
+
+    private IEnumerator StartInitialDialogue()
+    {
+        yield return new WaitForEndOfFrame(); // garante que a cena terminou de carregar
+        Next();
+    }
+    
 
     private void Update()
     {

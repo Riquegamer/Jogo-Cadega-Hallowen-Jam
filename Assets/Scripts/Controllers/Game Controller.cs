@@ -4,9 +4,11 @@ using UnityEngine.InputSystem;
 public class GameController : MonoBehaviour
 {
     public static GameController instance;
+    private GameObject inventory;
 
     private void Awake()
     {
+       inventory = GameObject.FindWithTag("Inventory");
         DontDestroyOnLoad(this.gameObject);
         if (instance == null)
         {
@@ -16,6 +18,42 @@ public class GameController : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    private void Start()
+    {
+        // Garante que temos todas as dependências antes de carregar o inventário
+        if (DBController.Instance == null)
+        {
+            Debug.LogError("[GameController] DBController.Instance é null!");
+            return;
+        }
+        
+        if (InventorySystem.Instance == null)
+        {
+            Debug.LogError("[GameController] InventorySystem.Instance é null!");
+            return;
+        }
+        
+        if (ItemDatabase.Instance == null)
+        {
+            Debug.LogError("[GameController] ItemDatabase.Instance é null!");
+            return;
+        }
+
+        // Aguarda um frame para garantir que todos os Awake() foram chamados
+        StartCoroutine(LoadInventoryAfterFrame());
+
+        if (inventory != null)
+            inventory.SetActive(false);
+    }
+
+    private System.Collections.IEnumerator LoadInventoryAfterFrame()
+    {
+        yield return null; // Aguarda um frame
+        Debug.Log("[GameController] Iniciando carregamento do inventário...");
+        DBController.Instance.LoadInventory();
+        Debug.Log("[GameController] Carregamento do inventário solicitado.");
     }
 
     public void QuitGame()
@@ -35,15 +73,24 @@ public class GameController : MonoBehaviour
 
     public void ActiveInventory() 
     {
-        
-        GameObject inventory = GameObject.FindWithTag("Inventory");
+        Debug.Log("Inventory Toggle");
+        if (inventory == null) 
+        {
+            inventory = GameObject.FindWithTag("Inventory");
+        }
         if (inventory != null)
         {
-            if (inventory.activeSelf)
+            if (inventory.active == true)
                 inventory.SetActive(false);
             else
                 inventory.SetActive(true);
         }
-        
     }
+
+    public DialogueController FirstDialogue()
+    {
+        DialogueController dialogueController = GetComponent<DialogueController>();
+        return dialogueController;
+    }
+
 }

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a83677dbb0a9bb5409844df722029052, type: 3}
+  m_Name: INICIAL
+  m_EditorClassIdentifier: 
+  talkScript:
+  - characterName: Player
+    text: "19/11/1929 mais um assasinato aconteceu como, quem e quando s\xE3o essas
+      perguntas que todos aqui nessa cena de crime nos perguntamos."
+  - characterName: Player
+    text: "Desde sempre eu fui uma pessoa \"aben\xE7oada\" por conta de eu conseguir
+      ver e somente ver os mortos, at\xE9 porque os mortos n\xE3o falam"
+  - characterName: Player
+    text: "mas ver um fantasma de um velho que infartou no meu apartamento \xE0s
+      3 da manh\xE3 n\xE3o \xE9 a melhor das d\xE1divas, mas me ajuda a ganhar um
+      dinheiro ajudando em investiga\xE7\xF5es."
+  - characterName: Player
+    text: "Al\xE9m do mais desde que eu come\xE7ei a investigar os mortos um fantasma
+      come\xE7ou a me seguir eu acho que ele deve ter assuntos pendentes"
+  - characterName: Player
+    text: "mas ele \xE9 de grande ajuda em alguns casos ele de alguma forma consegur
+      se comunicar com outros fantasmas de qualquer forma espero poder retribuir
+      o favor qualquer hora"
+  - characterName: Player
+    text: mas por hora vou focar nesse caso
