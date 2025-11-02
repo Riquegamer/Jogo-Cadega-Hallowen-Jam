@@ -89,7 +89,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("NPC"))
         {
-            dialogueTutorial.SetActive(false);
+            if(dialogueTutorial != null)
+                dialogueTutorial.SetActive(false);
             canTalk = false;
             dialogueController = null;
         }
@@ -117,6 +118,7 @@ public class PlayerController : MonoBehaviour
             canTalk = false;
             canMove = false;
             _rb.linearVelocity = Vector2.zero;
+            _animator.SetBool("isWalking", false);
             isTalking = true;
         }
     }

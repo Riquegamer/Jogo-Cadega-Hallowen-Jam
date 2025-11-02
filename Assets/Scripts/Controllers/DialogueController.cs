@@ -115,12 +115,13 @@ public class DialogueController : MonoBehaviour
             currentText = 0;
             finished = false;
             playerController.FinishedTalk();
-            if(audioSource != null)
+            terminated = true;
+            if (audioSource != null)
             {
                 audioSource.Stop();
                 GameController.instance.StartGameplayAudio();
             }
-            terminated = true;
+            
         }
     }
 

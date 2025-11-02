@@ -5,7 +5,7 @@ public class DropSlot : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
-        var dropped = eventData.pointerDrag;
+        GameObject dropped = eventData.pointerDrag;
         if (dropped != null)
         {
             dropped.transform.SetParent(transform);

@@ -1,48 +1,54 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class Puzzle01 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Canvas canvas;
+    private Transform originalParent;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
+        canvas = GetComponentInParent<Canvas>();
 
-        // Procura o canvas automaticamente
-        canvas = GameObject.FindWithTag("PRINCIPAL CANVAS")?.GetComponent<Canvas>();
+        if (canvas == null)
+            Debug.LogError(" Nenhum Canvas encontrado como pai do objeto arrast√°vel!");
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // Torna o item semi-transparente e ignor·vel para raycast
+        originalParent = transform.parent;
+        transform.SetParent(canvas.transform); // Garante que o item fique por cima da UI
+
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (canvas == null) return;
-
-        // Ajusta a movimentaÁ„o conforme o tamanho do Canvas
-        Vector2 pos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform,
-            eventData.position,
-            canvas.worldCamera,
-            out pos
-        );
-
-        rectTransform.anchoredPosition = pos;
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvas.transform as RectTransform,
+                eventData.position,
+                canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
+                out Vector2 localPoint))
+        {
+            rectTransform.anchoredPosition = localPoint;
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Restaura visibilidade e raycast
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
+
+        // Se n√£o for solto em slot v√°lido, volta pra origem
+        if (transform.parent == canvas.transform)
+            transform.SetParent(originalParent);
+
+        rectTransform.anchoredPosition = Vector2.zero;
     }
 }
